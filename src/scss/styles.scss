@@ -3,3 +3,16 @@
 $font-family-base: "Libertinus Math", system-ui;
 
 @import "bootstrap/scss/bootstrap";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family-base;
+  overflow-y: hidden;
+}
