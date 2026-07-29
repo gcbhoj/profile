@@ -1,14 +1,21 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { navigationItems } from "../config/navigation";
+import { toggleMobileMenu, closeMobileMenu } from "../features/layoutSlice";
 
 const Navbar = () => {
   const { alias } = useSelector((state) => state.resume);
 
+  const dispatch = useDispatch();
+
   return (
     <nav className="navbar navbar-expand-lg shadow-sm px-4">
       <div className="container-fluid">
-        <NavLink className="navbar-brand fw-bold" to="/">
+        <NavLink
+          className="navbar-brand fw-bold"
+          to="/"
+          onClick={dispatch(closeMobileMenu())}
+        >
           {alias}
         </NavLink>
 
@@ -17,6 +24,7 @@ const Navbar = () => {
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#portfolioNavbar"
+          onClick={() => dispatch(toggleMobileMenu())}
         >
           <span className="navbar-toggler-icon"></span>
         </button>

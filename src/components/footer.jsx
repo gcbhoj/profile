@@ -3,6 +3,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   const { github, linkedin } = useSelector((state) => state.resume);
+  const menuOpen = useSelector((state) => state.layout.mobileMenuOpen);
 
   const profiles = [
     {
@@ -18,6 +19,10 @@ const Footer = () => {
       link: linkedin,
     },
   ];
+
+  if (menuOpen) {
+    return null;
+  }
 
   return (
     <footer
