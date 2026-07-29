@@ -16,3 +16,20 @@ body {
   font-family: $font-family-base;
   overflow-y: hidden;
 }
+
+.nav-link {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);
+}
+
+.active-link {
+  font-weight: 700;
+  color: var(--bs-primary) !important;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}

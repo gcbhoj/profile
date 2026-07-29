@@ -22,16 +22,22 @@ const Navbar = () => {
         </button>
 
         <div
-          className="collapse navbar-collapse justify-content-end"
+          className="collapse navbar-collapse justify-content-end me-5"
           id="portfolioNavbar"
         >
           <ul className="navbar-nav">
             {navigationItems.map((item) => (
-              <li key={item.id} className="nav-item mx-2">
+              <li
+                key={item.id}
+                className="nav-item mx-2"
+                style={{
+                  fontSize: "18px",
+                }}
+              >
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>
-                    `nav-link ${isActive ? "active fw-bold text-primary" : ""}`
+                    `nav-link ${isActive ? "active-link" : ""}`
                   }
                 >
                   {item.name}
