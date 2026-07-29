@@ -4,7 +4,7 @@ import TechStack from "../components/techStack";
 import Location from "../components/location";
 
 const Home = () => {
-  const { name, primaryEmail, contact } = useSelector((state) => state.resume);
+  const { name, primaryEmail } = useSelector((state) => state.resume);
 
   return (
     <div
@@ -59,15 +59,6 @@ const Home = () => {
               {primaryEmail || "Loading..."}
             </a>
 
-            <h5
-              style={{
-                fontSize: "24px",
-                margin: "2px",
-                textShadow: "2px 2px 5px gray",
-              }}
-            >
-              {contact || "Loading..."}
-            </h5>
             <Location />
           </div>
 
