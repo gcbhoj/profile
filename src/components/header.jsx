@@ -1,22 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { fetchResume } from "../features/resumeSlice";
+import { useSelector } from "react-redux";
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const resume = useSelector((state) => state.resume);
+  const { name, alias, primaryEmail, contact } = useSelector(
+    (state) => state.resume,
+  );
 
-  useEffect(() => {
-    dispatch(fetchResume());
-  }, [dispatch]);
-
-  const splitName = (resume?.name || "").split("");
+  const splitName = (name || "").split("");
 
   return (
     <div
-      className="container-fluid border border-2 border-danger mt-3 px-5 py-5 libertinus-math-regular"
+      className="container-fluid border border-2 border-danger mt-3 px-5 py-2 libertinus-math-regular"
       style={{
-        height: "250px",
+        height: "200px",
         borderRadius: "15px",
         boxShadow: "5px -10px 5px gray",
       }}
@@ -30,10 +25,10 @@ const Header = () => {
             ))}
           </h2>
 
-          <h4>{resume?.alias}</h4>
+          <h4>{alias}</h4>
 
-          <p>{resume?.primaryEmail}</p>
-          <p>{resume?.contact}</p>
+          <p>{primaryEmail}</p>
+          <p>{contact}</p>
         </div>
 
         {/* Globe */}
