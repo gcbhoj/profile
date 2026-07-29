@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import ProfileImage from "../UI/profileImage";
 import TechStack from "../components/techStack";
+import Location from "../components/location";
 
 const Home = () => {
   const { name, primaryEmail, contact } = useSelector((state) => state.resume);
@@ -67,6 +68,7 @@ const Home = () => {
             >
               {contact || "Loading..."}
             </h5>
+            <Location />
           </div>
 
           {/* Profile Image */}
