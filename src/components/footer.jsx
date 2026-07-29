@@ -1,8 +1,8 @@
 const Footer = () => {
   return (
     <footer
-      className="border-top bg-body shadow-sm"
-      style={{ height: "50px" }}
+      className="fixed-bottom border-top bg-body shadow-sm"
+      style={{ height: "70px" }}
     >
       <div className="container h-100">
         <div className="row h-100 align-items-center">

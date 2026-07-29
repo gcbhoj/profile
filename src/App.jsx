@@ -1,10 +1,12 @@
 import { useDispatch } from "react-redux";
-import Footer from "./components/footer";
-import Header from "./components/header";
-import PageDisplay from "./components/pageDisplay";
+import { Routes, Route } from "react-router-dom";
 import ThemeManager from "./features/themeManager";
 import { useEffect } from "react";
 import { fetchResume } from "./features/resumeSlice";
+import Home from "./pages/home";
+import AboutMe from "./pages/aboutme";
+import Navbar from "./components/navbar";
+import Footer from "./components/footer";
 
 const App = () => {
   /**
@@ -24,8 +26,12 @@ const App = () => {
       }}
     >
       <ThemeManager />
-      <Header />
-      <PageDisplay />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/aboutme" element={<AboutMe />} />
+      </Routes>
+
       <Footer />
     </div>
   );
