@@ -11,4 +11,9 @@ export const navigationItems = [
     name: "About",
     path: "/aboutme",
   },
+  {
+    id: 3,
+    name: "Games",
+    path: "/games",
+  },
 ];

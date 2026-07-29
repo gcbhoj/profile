@@ -11,7 +11,7 @@ const initialState = {
   primaryEmail: "",
   contact: "",
   github: "",
-  linkdlin: "",
+  linkedin: "",
   aboutme: "",
   status: "idle",
   error: null,
@@ -38,7 +38,7 @@ const resumeSlice = createSlice({
         state.primaryEmail = action.payload.primaryEmail;
         state.contact = action.payload.contact;
         state.github = action.payload.github;
-        state.linkdlin = action.payload.linkdlin;
+        state.linkdlin = action.payload.linkedin;
         state.aboutme = action.payload.aboutMe;
       })
 

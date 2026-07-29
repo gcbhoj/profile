@@ -6,6 +6,7 @@ import { fetchResume } from "./features/resumeSlice";
 import Home from "./pages/home";
 import AboutMe from "./pages/aboutme";
 import Navbar from "./components/navbar";
+import Games from "./pages/games";
 import Footer from "./components/footer";
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/aboutme" element={<AboutMe />} />
+        <Route path="/games" element={<Games />} />
       </Routes>
 
       <Footer />

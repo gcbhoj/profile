@@ -6,7 +6,7 @@ const Navbar = () => {
   const { alias } = useSelector((state) => state.resume);
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body border shadow-sm px-4">
+    <nav className="navbar navbar-expand-lg shadow-sm px-4">
       <div className="container-fluid">
         <NavLink className="navbar-brand fw-bold" to="/">
           {alias}
