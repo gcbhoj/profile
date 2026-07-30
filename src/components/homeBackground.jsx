@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { geoFindMe } from "../utils/locationfinder";
 import { setLocation } from "../features/locationSlice";
 
-const EARTH_RADIUS = 2;
+const EARTH_RADIUS = 1.2;
 
 // Standard spherical conversion matching default Three.js texture UV mapping
 function latLonToVector3(lat, lon, radius) {
@@ -84,7 +84,7 @@ const HomeBackground = () => {
       new THREE.MeshStandardMaterial({
         map: earthTexture,
         bumpMap: bumpTexture,
-        bumpScale: 0.05,
+        bumpScale: 0.02,
         roughness: 0.9,
         metalness: 0.05,
       }),
@@ -105,7 +105,7 @@ const HomeBackground = () => {
       const markerGroup = new THREE.Group();
 
       const stem = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.01, 0.01, 0.18, 12),
+        new THREE.CylinderGeometry(0.006, 0.006, 0.12, 12),
         new THREE.MeshBasicMaterial({ color: "white" }),
       );
       stem.position.y = 0.09;

@@ -33,7 +33,6 @@ const Home = () => {
               height: "60%",
               justifyContent: "space-between",
               padding: "20px",
-              backdropFilter: "blur(5px)",
             }}
           >
             {/* Name and Email */}
