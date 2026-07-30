@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import ProfileImage from "../UI/profileImage";
 import TechStack from "../components/techStack";
-import Location from "../components/location";
 import HomeBackground from "../components/homeBackground";
 
 const Home = () => {
@@ -27,7 +26,7 @@ const Home = () => {
           }}
         >
           <div
-            className="rounded-5 shadow-sm d-flex align-items-center"
+            className="d-flex align-items-center"
             style={{
               width: "80%",
               height: "60%",
@@ -64,8 +63,6 @@ const Home = () => {
               >
                 {primaryEmail || "Loading..."}
               </a>
-
-              <Location />
             </div>
 
             {/* Profile Image */}

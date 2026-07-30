@@ -1,16 +1,19 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+// Import the CSS2D subsystems directly from the standard Three package bundles
+import {
+  CSS2DRenderer,
+  CSS2DObject,
+} from "three/examples/jsm/renderers/CSS2DRenderer.js";
 import { useSelector, useDispatch } from "react-redux";
-import { geoFindMe } from "../utils/locationfinder";
+import { geoFindMe, getLocationDetails } from "../utils/locationfinder";
 import { setLocation } from "../features/locationSlice";
 
-const EARTH_RADIUS = 1.2;
+const EARTH_RADIUS = 1.2; // Your scaled down size
 
-// Standard spherical conversion matching default Three.js texture UV mapping
 function latLonToVector3(lat, lon, radius) {
   const phi = THREE.MathUtils.degToRad(90 - lat);
-  const theta = THREE.MathUtils.degToRad(lon + 90); // 90-degree offset fixes texture seam placement
-
+  const theta = THREE.MathUtils.degToRad(lon + 90);
   return new THREE.Vector3(
     radius * Math.sin(phi) * Math.sin(theta),
     radius * Math.cos(phi),
@@ -21,21 +24,25 @@ function latLonToVector3(lat, lon, radius) {
 const HomeBackground = () => {
   const mountRef = useRef(null);
   const dispatch = useDispatch();
-  const { latitude, longitude } = useSelector((state) => state.location);
+  const { latitude, longitude, city } = useSelector((state) => state.location);
 
+  // Trigger the permission request and lookup city asynchronously
   useEffect(() => {
     geoFindMe()
-      .then((coords) => {
+      .then(async (coords) => {
+        const detailedLocation = await getLocationDetails(
+          coords.latitude,
+          coords.longitude,
+        );
         dispatch(
           setLocation({
             latitude: coords.latitude,
             longitude: coords.longitude,
+            city: detailedLocation,
           }),
         );
       })
-      .catch((err) => {
-        console.error("Location tracking failed:", err);
-      });
+      .catch((err) => console.error(err));
   }, [dispatch]);
 
   useEffect(() => {
@@ -43,7 +50,7 @@ const HomeBackground = () => {
     if (!mount) return;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#08182d");
+    // scene.background = new THREE.Color("#08182d");
 
     const camera = new THREE.PerspectiveCamera(
       55,
@@ -58,16 +65,19 @@ const HomeBackground = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     mount.appendChild(renderer.domElement);
 
+    // --- HTML Label Layer Setup ---
+    const labelRenderer = new CSS2DRenderer();
+    labelRenderer.setSize(window.innerWidth, window.innerHeight);
+    labelRenderer.domElement.style.position = "absolute";
+    labelRenderer.domElement.style.top = "0px";
+    labelRenderer.domElement.style.pointerEvents = "none"; // Keeps background transparent/clickable
+    mount.appendChild(labelRenderer.domElement);
+
     scene.add(new THREE.AmbientLight(0xffffff, 0.5));
     const sun = new THREE.DirectionalLight(0xffffff, 2);
     sun.position.set(5, 3, 5);
     scene.add(sun);
 
-    /*
-    ====================================
-    Earth Pivot Group (FIXES BACKSIDE BUG)
-    ====================================
-    */
     const earthGroup = new THREE.Group();
     scene.add(earthGroup);
 
@@ -77,6 +87,11 @@ const HomeBackground = () => {
     );
     const bumpTexture = loader.load(
       "https://unpkg.com/three-globe/example/img/earth-topology.png",
+    );
+
+    // --- NEW: Load Star Icon Alpha Texture ---
+    const starIconTexture = loader.load(
+      "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/lensflare/lensflare0_alpha.png",
     );
 
     const earth = new THREE.Mesh(
@@ -89,14 +104,37 @@ const HomeBackground = () => {
         metalness: 0.05,
       }),
     );
-    // Add earth to the outer rotational group container
     earthGroup.add(earth);
 
-    /*
-    ====================================
-    User Marker & Perfect Target Rotations
-    ====================================
-    */
+    // --- Searching / Scanning Lines Setup ---
+    const scanningLinesGroup = new THREE.Group();
+    const isSearching = latitude === null || longitude === null;
+
+    if (isSearching) {
+      scene.add(scanningLinesGroup);
+
+      const ringCount = 3;
+      const ringMaterial = new THREE.MeshBasicMaterial({
+        color: 0x00ffcc,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.4,
+      });
+
+      for (let i = 0; i < ringCount; i++) {
+        const ringGeo = new THREE.RingGeometry(
+          EARTH_RADIUS + 0.02,
+          EARTH_RADIUS + 0.035,
+          64,
+        );
+        const ringMesh = new THREE.Mesh(ringGeo, ringMaterial);
+        ringMesh.rotation.x = Math.PI / 2;
+        ringMesh.position.y = (i - 1) * 0.6;
+        ringMesh.userData = { speed: 0.015 + i * 0.005, direction: 1 };
+        scanningLinesGroup.add(ringMesh);
+      }
+    }
+
     let marker = null;
     let targetRotationY = 0;
     let targetRotationX = 0;
@@ -104,107 +142,118 @@ const HomeBackground = () => {
     if (latitude !== null && longitude !== null) {
       const markerGroup = new THREE.Group();
 
+      // Pin components
       const stem = new THREE.Mesh(
         new THREE.CylinderGeometry(0.006, 0.006, 0.12, 12),
         new THREE.MeshBasicMaterial({ color: "white" }),
       );
-      stem.position.y = 0.09;
+      stem.position.y = 0.06;
       markerGroup.add(stem);
 
       const head = new THREE.Mesh(
-        new THREE.SphereGeometry(0.04, 16, 16),
+        new THREE.SphereGeometry(0.03, 16, 16),
         new THREE.MeshBasicMaterial({ color: "#ff3030" }),
       );
-      head.position.y = 0.18;
+      head.position.y = 0.12;
       markerGroup.add(head);
 
-      const glow = new THREE.Mesh(
-        new THREE.SphereGeometry(0.06, 16, 16),
-        new THREE.MeshBasicMaterial({
-          color: "#ff3030",
-          transparent: true,
-          opacity: 0.35,
-        }),
-      );
-      glow.position.y = 0.18;
-      markerGroup.add(glow);
-
+      // Position logic
       const position = latLonToVector3(
         latitude,
         longitude,
         EARTH_RADIUS + 0.01,
       );
       markerGroup.position.copy(position);
-
       markerGroup.quaternion.setFromUnitVectors(
         new THREE.Vector3(0, 1, 0),
         position.clone().normalize(),
       );
-
-      // Attach marker to the earth mesh so it moves relatively with it
       earth.add(markerGroup);
       marker = markerGroup;
 
-      // Mathematically precise targets to bring the pin front-and-center:
+      // --- Floating HTML UI Label Component ---
+      if (city) {
+        const cityDiv = document.createElement("div");
+        cityDiv.className = "globe-city-label";
+        cityDiv.textContent = city;
+
+        cityDiv.style.color = "white";
+        cityDiv.style.fontFamily = "sans-serif";
+        cityDiv.style.fontWeight = "bold";
+        cityDiv.style.fontSize = "14px";
+        cityDiv.style.padding = "4px 10px";
+        cityDiv.style.background = "rgba(8, 24, 45, 0.85)";
+        cityDiv.style.border = "1px solid rgba(255, 255, 255, 0.2)";
+        cityDiv.style.borderRadius = "4px";
+        cityDiv.style.whiteSpace = "nowrap";
+
+        const cityLabel = new CSS2DObject(cityDiv);
+        cityLabel.position.set(0, 0.18, 0);
+        marker.add(cityLabel);
+      }
+
       targetRotationY = THREE.MathUtils.degToRad(-longitude - 90);
       targetRotationX = THREE.MathUtils.degToRad(latitude);
     }
 
-    /*
-    ====================================
-    Stars & Animation Loop
-    ====================================
-    */
+    // --- UPDATED: Icon-Based Starfield Layout ---
     const starGeometry = new THREE.BufferGeometry();
-    const starCount = 2000;
+    const starCount = 600; // Lowered slightly since icon sprites look fuller than raw pixels
     const starPositions = new Float32Array(starCount * 3);
     for (let i = 0; i < starCount; i++) {
-      starPositions[i * 3] = (Math.random() - 0.5) * 100;
-      starPositions[i * 3 + 1] = (Math.random() - 0.5) * 100;
-      starPositions[i * 3 + 2] = (Math.random() - 0.5) * 100;
+      starPositions[i * 3] = (Math.random() - 0.5) * 80;
+      starPositions[i * 3 + 1] = (Math.random() - 0.5) * 80;
+      starPositions[i * 3 + 2] = (Math.random() - 0.5) * 80;
     }
     starGeometry.setAttribute(
       "position",
       new THREE.BufferAttribute(starPositions, 3),
     );
-    const stars = new THREE.Points(
-      starGeometry,
-      new THREE.PointsMaterial({ color: "white", size: 0.15 }),
-    );
+
+    const starsMaterial = new THREE.PointsMaterial({
+      color: 0xffffff,
+      size: 0.7, // Scaled up slightly so the icons are recognizable
+      map: starIconTexture, // Injects the star icon image
+      transparent: true, // Required to honor the alpha transparency background
+      blending: THREE.AdditiveBlending, // Makes the stars pop and look intensely bright
+      depthWrite: false, // Prevents the icon square borders from clipping each other
+    });
+
+    const stars = new THREE.Points(starGeometry, starsMaterial);
     scene.add(stars);
 
     let frame;
-    const clock = new THREE.Clock();
-
     const animate = () => {
       frame = requestAnimationFrame(animate);
 
       if (latitude !== null && longitude !== null) {
-        // Outer group handles Longitude (Y-Axis) tracking
         earthGroup.rotation.y +=
           (targetRotationY - earthGroup.rotation.y) * 0.04;
-        // Inner mesh handles Latitude (X-Axis) tracking perfectly independent of Y deformation
         earth.rotation.x += (targetRotationX - earth.rotation.x) * 0.04;
       } else {
-        // Idle spinning when coordinates aren't ready yet
         earthGroup.rotation.y += 0.002;
+
+        // Animate scanning lines while searching
+        scanningLinesGroup.children.forEach((ring) => {
+          ring.position.y += ring.userData.speed * ring.userData.direction;
+          if (Math.abs(ring.position.y) > EARTH_RADIUS * 0.9) {
+            ring.userData.direction *= -1;
+          }
+        });
       }
 
-      if (marker) {
-        const pulse = 1 + Math.sin(clock.getElapsedTime() * 4) * 0.15;
-        marker.scale.setScalar(pulse);
-      }
+      stars.rotation.y += 0.0001; // Soft cosmic space rotation
 
-      stars.rotation.y += 0.0002;
       renderer.render(scene, camera);
+      labelRenderer.render(scene, camera);
     };
-
     animate();
 
     const resize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      labelRenderer.setSize(window.innerWidth, window.innerHeight);
     };
     window.addEventListener("resize", resize);
 
@@ -217,13 +266,25 @@ const HomeBackground = () => {
       earth.material.dispose();
       earthTexture.dispose();
       bumpTexture.dispose();
+      starIconTexture.dispose(); // Dispose texture resource
       starGeometry.dispose();
       stars.material.dispose();
-      if (mount.contains(renderer.domElement)) {
+
+      scanningLinesGroup.children.forEach((ring) => {
+        ring.geometry.dispose();
+        if (Array.isArray(ring.material)) {
+          ring.material.forEach((m) => m.dispose());
+        } else {
+          ring.material.dispose();
+        }
+      });
+
+      if (mount.contains(renderer.domElement))
         mount.removeChild(renderer.domElement);
-      }
+      if (mount.contains(labelRenderer.domElement))
+        mount.removeChild(labelRenderer.domElement);
     };
-  }, [latitude, longitude]);
+  }, [latitude, longitude, city]);
 
   return (
     <div
