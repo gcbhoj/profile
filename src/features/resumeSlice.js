@@ -10,6 +10,9 @@ const initialState = {
   alias: "",
   primaryEmail: "",
   contact: "",
+  github: "",
+  linkedin: "",
+  aboutme: "",
   status: "idle",
   error: null,
 };
@@ -34,6 +37,9 @@ const resumeSlice = createSlice({
         state.alias = action.payload.alias;
         state.primaryEmail = action.payload.primaryEmail;
         state.contact = action.payload.contact;
+        state.github = action.payload.github;
+        state.linkdlin = action.payload.linkedin;
+        state.aboutme = action.payload.aboutMe;
       })
 
       .addCase(fetchResume.rejected, (state, action) => {
