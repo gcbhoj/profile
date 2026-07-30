@@ -135,7 +135,6 @@ const HomeBackground = () => {
       }
     }
 
-    let marker = null;
     let targetRotationY = 0;
     let targetRotationX = 0;
 
@@ -169,7 +168,6 @@ const HomeBackground = () => {
         position.clone().normalize(),
       );
       earth.add(markerGroup);
-      marker = markerGroup;
 
       // --- Floating HTML UI Label Component ---
       if (city) {
@@ -189,7 +187,7 @@ const HomeBackground = () => {
 
         const cityLabel = new CSS2DObject(cityDiv);
         cityLabel.position.set(0, 0.18, 0);
-        marker.add(cityLabel);
+        markerGroup.add(cityLabel);
       }
 
       targetRotationY = THREE.MathUtils.degToRad(-longitude - 90);

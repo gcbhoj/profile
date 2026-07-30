@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import ProfileImage from "../UI/profileImage";
 import TechStack from "../components/techStack";
-import HomeBackground from "../components/homeBackground";
+import HomeBackground from "../backgrounds/homeBackground";
 
 const Home = () => {
   const { name, primaryEmail } = useSelector((state) => state.resume);

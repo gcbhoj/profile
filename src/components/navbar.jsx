@@ -21,13 +21,16 @@ const Navbar = () => {
         </NavLink>
 
         <button
-          className="navbar-toggler"
+          className="navbar-toggler bg-body"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#portfolioNavbar"
           onClick={() => dispatch(toggleMobileMenu())}
         >
-          <span className="navbar-toggler-icon"></span>
+          <span
+            className="navbar-toggler-icon"
+            style={{ color: "white" }}
+          ></span>
         </button>
 
         <div
@@ -48,6 +51,7 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `nav-link ${isActive ? "active-link" : ""}`
                   }
+                  style={{ color: "white" }}
                 >
                   {item.name}
                 </NavLink>
