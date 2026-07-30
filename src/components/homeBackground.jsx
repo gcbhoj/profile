@@ -50,7 +50,7 @@ const HomeBackground = () => {
     if (!mount) return;
 
     const scene = new THREE.Scene();
-    // scene.background = new THREE.Color("#08182d");
+    scene.background = new THREE.Color("#08182d");
 
     const camera = new THREE.PerspectiveCamera(
       55,

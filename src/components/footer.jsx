@@ -46,7 +46,7 @@ const Footer = () => {
                 className="text-decoration-none text-body"
                 title={profile.name}
               >
-                <Icon size={18} />
+                <Icon size={18} color="white" />
               </a>
             );
           })}

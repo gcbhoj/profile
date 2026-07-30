@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
-import ThemeManager from "./features/themeManager";
 import { useEffect } from "react";
 import { fetchResume } from "./features/resumeSlice";
 import Home from "./pages/home";
@@ -26,7 +25,6 @@ const App = () => {
         overflow: "hidden",
       }}
     >
-      <ThemeManager />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

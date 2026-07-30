@@ -47,6 +47,7 @@ const Home = () => {
                   fontSize: "32px",
                   margin: "2px",
                   textShadow: "2px 2px 5px gray",
+                  color: "white",
                 }}
               >
                 {name || "Loading..."}
@@ -59,6 +60,7 @@ const Home = () => {
                   fontSize: "24px",
                   margin: "2px",
                   textShadow: "2px 2px 5px gray",
+                  color: "white",
                 }}
               >
                 {primaryEmail || "Loading..."}

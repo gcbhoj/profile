@@ -45,8 +45,8 @@ const TechStack = () => {
 
         return (
           <div key={item.id} className="d-flex flex-column align-items-center">
-            <Icon size={18} />
-            <small>{item.stack}</small>
+            <Icon size={18} color="white" />
+            <small style={{ color: "white" }}>{item.stack}</small>
           </div>
         );
       })}
