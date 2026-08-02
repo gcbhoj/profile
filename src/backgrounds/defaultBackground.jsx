@@ -15,7 +15,7 @@ const DefaultBackground = () => {
 
     const scene = new THREE.Scene();
 
-    const skyColor = new THREE.Color("#08182d");
+    const skyColor = new THREE.Color("#262730");
 
     scene.background = skyColor;
 
@@ -111,12 +111,12 @@ const DefaultBackground = () => {
     /*
       Create Spheres
     */
-
+    const sphereCount = 50
     const spheres = [];
 
     const sphereGeometry = new THREE.SphereGeometry(0.15, 16, 16);
 
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < sphereCount; i++) {
       const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
       sphere.position.set(

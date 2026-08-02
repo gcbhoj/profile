@@ -54,7 +54,7 @@ const Footer = () => {
 
         {/* Footer Text */}
         <div className="text-center text-secondary">
-          <small>@BhojGC Updated July 2026</small>
+          <small>@BhojGC Updated August 2026</small>
         </div>
       </div>
     </footer>
