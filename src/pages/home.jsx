@@ -81,7 +81,6 @@ const Home = () => {
 
         {/* Tech Stack */}
         <div
-          className="pb-3"
           style={{
             position: "relative",
           }}
