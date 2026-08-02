@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { geoFindMe, getLocationDetails } from "../utils/locationfinder";
 import { setLocation } from "../features/locationSlice";
 
-const EARTH_RADIUS = 1.2; // Your scaled down size
+const EARTH_RADIUS = 0.75; // Your scaled down size
 
 function latLonToVector3(lat, lon, radius) {
   const phi = THREE.MathUtils.degToRad(90 - lat);
@@ -50,7 +50,7 @@ const HomeBackground = () => {
     if (!mount) return;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#08182d");
+    scene.background = new THREE.Color("#262730");
 
     const camera = new THREE.PerspectiveCamera(
       55,
@@ -80,6 +80,7 @@ const HomeBackground = () => {
 
     const earthGroup = new THREE.Group();
     scene.add(earthGroup);
+    earthGroup.position.set(-0.25, 1.2, -1);
 
     const loader = new THREE.TextureLoader();
     const earthTexture = loader.load(
@@ -95,7 +96,7 @@ const HomeBackground = () => {
     );
 
     const earth = new THREE.Mesh(
-      new THREE.SphereGeometry(EARTH_RADIUS, 64, 64),
+      new THREE.SphereGeometry(EARTH_RADIUS, 32, 32),
       new THREE.MeshStandardMaterial({
         map: earthTexture,
         bumpMap: bumpTexture,
@@ -111,7 +112,7 @@ const HomeBackground = () => {
     const isSearching = latitude === null || longitude === null;
 
     if (isSearching) {
-      scene.add(scanningLinesGroup);
+      earthGroup.add(scanningLinesGroup);
 
       const ringCount = 3;
       const ringMaterial = new THREE.MeshBasicMaterial({
