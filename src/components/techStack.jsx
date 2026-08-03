@@ -175,34 +175,78 @@ const techStack = [
   },
 ];
 
+import { useState } from "react";
+
 const TechStack = () => {
+  const [openStack, setOpenStack] = useState(null);
+
+  const toggleStack = (id) => {
+    setOpenStack(openStack === id ? null : id);
+  };
+
   return (
     <div className="container-fluid py-3 tech-stack">
       <div className="row g-4">
         {techStack.map((section) => (
-          <div key={section.id} className="col-12 col-md-6 col-lg-4">
-            <h6 className="text-center fw-bold category-title">
+          <div
+            key={section.id}
+            className="
+              col-12
+              col-md-6
+              col-lg-4
+            "
+          >
+            {/* Dropdown Header */}
+
+            <button
+              className="btn w-100 text-center fw-bold rounded-5 shadow-sm bg-none border border-1"
+              style={{ color: "white" }}
+              onClick={() => toggleStack(section.id)}
+            >
               {section.category}
-            </h6>
 
-            {section.rows.map((row) => (
-              <div key={row.id} className="row g-2 mb-3">
-                {row.stacks.map((stack) => (
-                  <div key={stack.name} className="col-4 tech-item">
-                    <div className="tech-icon">
-                      {stack.icons.length > 0 &&
-                        stack.icons.map((Icon, index) => (
-                          <Icon key={index} className="tech-icon-svg" />
-                        ))}
-                    </div>
+              <span className="ms-2">
+                {openStack === section.id ? "▲" : "▼"}
+              </span>
+            </button>
 
-                    <small className="tech-name">{stack.name}</small>
+            {/* Dropdown Content */}
 
-                    <small className="stack-type">{stack.type}</small>
+            {openStack === section.id && (
+              <div className="mt-3">
+                {section.rows.map((row) => (
+                  <div
+                    key={row.id}
+                    className="
+                          row
+                          g-2
+                          mb-3
+                        "
+                  >
+                    {row.stacks.map((stack) => (
+                      <div
+                        key={stack.name}
+                        className="
+                                col-4
+                                tech-item
+                                rounded-5
+                              "
+                      >
+                        <div className="tech-icon">
+                          {stack.icons.map((Icon, index) => (
+                            <Icon key={index} className="tech-icon-svg" />
+                          ))}
+                        </div>
+
+                        <small className="tech-name">{stack.name}</small>
+
+                        <small className="stack-type">{stack.type}</small>
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
-            ))}
+            )}
           </div>
         ))}
       </div>

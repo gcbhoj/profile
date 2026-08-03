@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import ProfileImage from "../UI/profileImage";
 import TechStack from "../components/techStack";
 import HomeBackground from "../backgrounds/homeBackground";
+import WebExperience from "../components/webExperience";
 
 const Home = () => {
   const { name, primaryEmail } = useSelector((state) => state.resume);
@@ -77,6 +78,9 @@ const Home = () => {
               <ProfileImage />
             </div>
           </div>
+        </div>
+        <div>
+          <WebExperience />
         </div>
 
         {/* Tech Stack */}

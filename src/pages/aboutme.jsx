@@ -12,20 +12,40 @@ const AboutMe = () => {
   }
 
   return (
-    <div className="container-fluid p-3">
-      <h3>About Me</h3>
-
-      <p
-        style={{
-          fontSize: "18px",
-          lineHeight: "1.8",
-          textAlign: "justify",
-          wordSpacing: "3px",
-          letterSpacing:"1px"
-        }}
+    <div
+      className="container-fluid d-flex justify-content-center align-items-center"
+      style={{ minHeight: "80vh" }}
+    >
+      <div
+        className="card border-0 bg-transparent d-flex align-items-center justify-content-center"
+        style={{ width: "100%", maxWidth: "1200px" }}
       >
-        {aboutme}
-      </p>
+        <h3
+          className="card-title mb-5 text-center"
+          style={{
+            color: "white",
+            fontSize: "36px",
+          }}
+        >
+          About Me
+        </h3>
+
+        <p
+          className="card-text shadow-lg rounded-5"
+          style={{
+            width: "75%",
+            padding: "24px",
+            fontSize: "18px",
+            lineHeight: "1.8",
+            textAlign: "justify",
+            wordSpacing: "3px",
+            letterSpacing: "1px",
+            color: "white",
+          }}
+        >
+          {aboutme}
+        </p>
+      </div>
     </div>
   );
 };
