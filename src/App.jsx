@@ -8,6 +8,7 @@ import Navbar from "./components/navbar";
 import Games from "./pages/games";
 import Footer from "./components/footer";
 import DefaultBackground from "./backgrounds/defaultBackground";
+import GamePage from "./pages/gamePage";
 
 const App = () => {
   /**
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/aboutme" element={<AboutMe />} />
           <Route path="/games" element={<Games />} />
+          <Route path="/games/:gameId" element={<GamePage />} />
         </Routes>
 
         <Footer />
