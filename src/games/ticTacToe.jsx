@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import * as THREE from "three";
-// Update this path line to read directly from the new file:
-import { useThree } from "./threeContext";
+import { useThree } from "./ThreeContext";
 
 const TicTacToe = () => {
   const three = useThree();
@@ -10,14 +9,28 @@ const TicTacToe = () => {
     if (!three) return;
 
     const { scene } = three;
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
 
-    cube.position.set(0, 0.5, 0);
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshNormalMaterial();
+
+    const cube = new THREE.Mesh(geometry, material);
+    cube.position.y = 0.5;
+
     scene.add(cube);
 
+    let frameId;
+
+    const animate = () => {
+      frameId = requestAnimationFrame(animate);
+
+      cube.rotation.x += .01;
+      cube.rotation.y += 0.01;
+    };
+
+    animate();
+
     return () => {
+      cancelAnimationFrame(frameId);
       scene.remove(cube);
       geometry.dispose();
       material.dispose();

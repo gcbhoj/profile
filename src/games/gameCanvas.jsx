@@ -10,6 +10,7 @@ const GameCanvas = ({ children }) => {
         justifyContent: "center",
         alignItems: "center",
         overflow: "hidden",
+        borderRadius: "2rem",
       }}
     >
       <ThreeCanvas>{children}</ThreeCanvas>
