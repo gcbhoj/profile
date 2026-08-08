@@ -1,5 +1,3 @@
-// src/config/navigation.js
-
 export const navigationItems = [
   {
     id: 1,
@@ -13,6 +11,11 @@ export const navigationItems = [
   },
   {
     id: 3,
+    name: "Education",
+    path: "/education",
+  },
+  {
+    id: 4,
     name: "Games",
     path: "/games",
   },
