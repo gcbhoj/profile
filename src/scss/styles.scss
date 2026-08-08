@@ -95,5 +95,46 @@ body {
     font-size: 0.55rem;
   }
 
-  
+  .institution-preview {
+    position: relative;
+    display: inline-block;
+  }
+
+  .institution-tooltip {
+    position: absolute;
+    z-index: 1000;
+
+    width: 500px;
+    height: 300px;
+
+    left: 50%;
+    bottom: calc(100% + 15px);
+
+    transform: translateX(-50%);
+
+    background: black;
+    border: 1px solid white;
+    border-radius: 12px;
+
+    padding: 5px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+  }
+
+  .institution-preview:hover .institution-tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .institution-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+  }
 }

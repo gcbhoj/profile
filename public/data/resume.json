@@ -116,6 +116,7 @@
       "institution": "Shanker Dev Campus",
       "affiliation": "Tribhuvan University",
       "institutionLink": "https://sdc.tu.edu.np/",
+      "affiliationLink": "https://tu.edu.np/",
       "country": "Kathmandu, Nepal"
     },
     {
@@ -126,6 +127,7 @@
       "institution": "Presidency College",
       "affiliation": "Madras University",
       "institutionLink": "https://www.pcc.ac.in/",
+      "affiliationLink": "https://www.unom.ac.in/",
       "country": "Chennai, TamilNadu, India"
     }
   ],

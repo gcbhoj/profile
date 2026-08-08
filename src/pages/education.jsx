@@ -28,7 +28,7 @@ const Education = () => {
         id="educationCarousel"
         className="carousel carousel-appear"
         data-bs-ride="carousel"
-        data-bs-interval="5000"
+        data-bs-interval="10000"
         style={{
           width: "75%",
           height: "55%",
@@ -85,26 +85,37 @@ const Education = () => {
                   className="card-body d-flex flex-column justify-content-center align-items-center"
                   style={{ border: "none" }}
                 >
-                  <p
-                    className="card-subheading"
+                  <a
+                    className="card-subheading institution-link"
                     style={{
                       color: "white",
                       letterSpacing: "1.75px",
                       wordSpacing: "2px",
+                      fontStyle: "italic",
+                      cursor: "pointer",
                     }}
+                    href={item.institutionLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     {item.institution}
-                  </p>
+                  </a>
                   {item.affiliation && (
-                    <p
+                    <a
+                      className="institution-link"
                       style={{
                         color: "white",
                         letterSpacing: "1.75px",
                         wordSpacing: "2px",
+                        fontStyle: "italic",
+                        cursor: "pointer",
                       }}
+                      href={item.institutionLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Affiliated To: {item.affiliation}
-                    </p>
+                    </a>
                   )}
                   <p
                     style={{
