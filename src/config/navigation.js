@@ -19,9 +19,4 @@ export const navigationItems = [
     name: "Experience",
     path: "/experience",
   },
-  {
-    id: 5,
-    name: "Games",
-    path: "/games",
-  },
 ];
