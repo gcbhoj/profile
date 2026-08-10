@@ -60,23 +60,13 @@ const DefaultBackground = () => {
 
     const textureLoader = new THREE.TextureLoader();
 
-    envTexture = textureLoader.load(
-      "https://threejs.org/examples/textures/equirectangular/royal_esplanade_1k.jpg",
-
-      (texture) => {
-        texture.mapping = THREE.EquirectangularReflectionMapping;
-
-        scene.environment = texture;
-
-        envTexture = texture;
-      },
-
-      undefined,
-
-      (error) => {
-        console.error("Environment texture failed", error);
-      },
-    );
+    envTexture = textureLoader.load("...", (texture) => {
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      scene.environment = texture;
+    });
+    if (envTexture) {
+      envTexture.dispose();
+    }
 
     /*
       Lighting
@@ -111,7 +101,7 @@ const DefaultBackground = () => {
     /*
       Create Spheres
     */
-    const sphereCount = 50
+    const sphereCount = 50;
     const spheres = [];
 
     const sphereGeometry = new THREE.SphereGeometry(0.15, 16, 16);

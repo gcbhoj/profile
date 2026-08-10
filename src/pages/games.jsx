@@ -1,50 +1,40 @@
 import { useNavigate } from "react-router-dom";
-import TicTacToe from "../games/tic-tac-toe";
+import { GameList } from "../config/gameList";
 
 const Games = () => {
   const navigate = useNavigate();
 
-  const games = [
-    {
-      id: 1,
-      gameName: "Tic-Tac-Toe",
-      thumbnail: "/tic-tac-toe.png",
-      component: TicTacToe,
-      path: "/games/tic-tac-toe",
-    },
-    {
-      id: 2,
-      gameName: "Snake & Ladder",
-      thumbnail: "/snakes-and-ladders.png",
-      component: TicTacToe,
-      path: "/games/snake-ladder",
-    },
-  ];
-
   return (
     <div className="container py-4">
-      <div className="row g-4">
-        {games.map((game) => (
-          <div key={game.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div className="row g-4 ">
+        {GameList.map((game) => (
+          <div key={game.id} className="col-md-4">
             <div
-              className="card h-100 shadow-sm"
+              className="card rounded-5 overflow-hidden border"
               style={{
-                cursor: "pointer",
+                background: "none",
+                color: "white",
               }}
-              onClick={() => navigate(game.path)}
             >
               <img
                 src={game.thumbnail}
-                alt={game.gameName}
+                alt={game.name}
                 className="card-img-top"
                 style={{
-                  height: "180px",
-                  objectFit: "cover",
+                  objectFit: "contain",
+                  background: "rgba(255,255,255,0.05)",
                 }}
               />
 
-              <div className="card-body d-flex flex-column">
-                <h5 className="card-title">{game.gameName}</h5>
+              <div className="card-body d-flex justify-content-center align-items-center">
+                <h5
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => navigate(`/games/${game.id}`)}
+                >
+                  {game.name}
+                </h5>
               </div>
             </div>
           </div>

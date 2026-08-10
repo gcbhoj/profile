@@ -14,7 +14,7 @@ const Navbar = () => {
         <NavLink
           className="navbar-brand fw-bold"
           to="/"
-          onClick={dispatch(closeMobileMenu())}
+          onClick={() => dispatch(closeMobileMenu())}
           style={{ color: "white" }}
         >
           {alias}

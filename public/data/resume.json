@@ -5,5 +5,254 @@
   "contact": "647-303-6737",
   "github": "https://github.com/gcbhoj",
   "linkedin": "www.linkedin.com/in/bhojgc",
-  "aboutMe": "Motivated Software Development and Network Engineering final-year student with hands-on academic and three-term co-op experience designing, developing, testing, and deploying full-stack web applications. Skilled in building responsive applications using Spring Boot and Angular for academic projects and developing MERN stack applications (MongoDB, Express.js, React, and Node.js) during co-op placements, with deployments to cloud platforms. Proficient in JavaScript, RESTful API development, MySQL, MongoDB, Git, and Agile development practices. Fast learner and collaborative team member with experience contributing to software development, troubleshooting application issues, and delivering maintainable software solutions."
+  "aboutMe": "Motivated Software Development and Network Engineering final-year student with hands-on academic and three-term co-op experience designing, developing, testing, and deploying full-stack web applications. Skilled in building responsive applications using Spring Boot and Angular for academic projects and developing MERN stack applications (MongoDB, Express.js, React, and Node.js) during co-op placements, with deployments to cloud platforms. Proficient in JavaScript, RESTful API development, MySQL, MongoDB, Git, and Agile development practices. Fast learner and collaborative team member with experience contributing to software development, troubleshooting application issues, and delivering maintainable software solutions.",
+  "demos": [
+    {
+      "educational": [
+        {
+          "id": 1,
+          "title": "Expense Reimbursement System",
+          "type": "Group Assignment",
+          "github": "https://github.com/gcbhoj/expense_management_system.git",
+          "videoLink": "https://www.google.com",
+          "features": [
+            {
+              "frontEnd": "Angular",
+              "backend": "Spring Boot",
+              "database": "PostgreSQL",
+              "pdf/Image Processing": "Python,OpenCV"
+            }
+          ],
+          "description": [
+            "An expense management application with an Angular frontend and Spring Boot backend connected to PostgreSQL for relational data storage. The application integrates with Python services using OpenCV to process uploaded expense receipts, extract expense totals, and prepare the data for approval. The original receipt is converted into a PDF containing the original receipt followed by a page displaying the extracted expense information for storage and future reference."
+          ],
+          "year": "2025"
+        },
+        {
+          "id": 2,
+          "title": "ZipCart Prototype",
+          "type": "Capstone Prototype",
+          "github": "https://github.com/gcbhoj/ZipCartPrototype.git",
+          "videoLink": "https://www.google.com",
+          "features": [
+            {
+              "frontend": "Ionic / Android",
+              "backend": "Spring Boot",
+              "database": "MySQL",
+              "imageProcessing": "Python, Machine Learning Model",
+              "hardware": "Raspberry Pi"
+            }
+          ],
+          "description": [
+            "ZipCart is a self-checkout shopping application that allows users to scan items while shopping, verify their cart, and complete purchases while maintaining transaction records for future reference.",
+            "The application uses Ionic and Capacitor to deploy a shared codebase across web and Android platforms, with MySQL storing shopping and transaction data. A Spring Boot backend integrates with a Raspberry Pi to capture the weight of loose items, while a machine learning image-recognition model identifies fruits and vegetables. Users can weigh loose items, add them to their cart, and complete their shopping session. At checkout, the application generates a barcode that can be scanned by an API-based barcode scanner to verify the cart contents."
+          ],
+          "year": "2025-2026"
+        },
+
+        {
+          "id": 3,
+          "title": "CI/CD Pipeline",
+          "type": "Group Assignment",
+          "github": "https://github.com/gcbhoj/springworkflow.git",
+          "videoLink": "https://www.google.com",
+          "description": [
+            "A project demonstrating the implementation of a Continuous Integration and Continuous Deployment (CI/CD) pipeline for the ZipCart prototype. The project automates the software build, testing, and deployment workflow to improve development efficiency and ensure consistent application delivery."
+          ],
+          "year": "2026"
+        }
+      ],
+      "co-op": [
+        {
+          "id": 1,
+          "title": "Punch-n-Spell",
+          "github": "https://samskrita-bharati.github.io/punch-n-spell/",
+          "videoLink": "https://www.google.com",
+          "type": "Individual Project",
+          "description": [
+            "An interactive 2D educational game built with Vanilla JavaScript and HTML5 Canvas. The game renders and animates interactive elements while helping users learn Sanskrit vowels, consonants, and numbers through engaging gameplay."
+          ],
+          "year": "Aug-Dec 2024"
+        },
+        {
+          "id": 2,
+          "title": "Word Complex/WordHunt",
+          "type": "Group Project",
+          "github": "https://word-complex.vercel.app/",
+          "videoLink": "https://www.google.com",
+          "description": [
+            "An interactive web application built with React and ZIM.js featuring four educational games that use tokenized passages to teach Sanskrit linguistics through engaging and interactive gameplay."
+          ],
+          "year": "May-July 2026"
+        },
+        {
+          "id": 3,
+          "title": "Dictionary Application",
+          "github": "https://sbdictionary-942e.onrender.com",
+          "videoLink": "https://www.google.com",
+          "description": [
+            "A Python-based REST API that collects Sanskrit passages from designated sources, processes and tokenizes the text, and stores linguistic data in MongoDB for consumption by the Word Complex application."
+          ],
+          "year": "May-July 2026"
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": 1,
+      "type": "Advanced Diploma",
+      "faculty": "Software Development & Network Engineering",
+      "year": "2023-2026",
+      "institution": "Sheridan College",
+      "institutionLink": "https://www.sheridancollege.ca/",
+      "country": "Brampton, Ontario, Canada"
+    },
+    {
+      "id": 2,
+      "type": "Masters in Business Studies",
+      "faculty": "Finance",
+      "year": "2003-2007",
+      "institution": "Shanker Dev Campus",
+      "affiliation": "Tribhuvan University",
+      "institutionLink": "https://sdc.tu.edu.np/",
+      "affiliationLink": "https://tu.edu.np/",
+      "country": "Kathmandu, Nepal"
+    },
+    {
+      "id": 3,
+      "type": "Bachelors in Science",
+      "faculty": "Psychology",
+      "year": "2000-2003",
+      "institution": "Presidency College",
+      "affiliation": "Madras University",
+      "institutionLink": "https://www.pcc.ac.in/",
+      "affiliationLink": "https://www.unom.ac.in/",
+      "country": "Chennai, TamilNadu, India"
+    }
+  ],
+  "workExperience": [
+    {
+      "id": 1,
+      "type": "Co-Op",
+      "title": "Full Stack Application Developer",
+      "organization": "Sheridan College, School of Applied Computing, Davis Campus",
+      "location": "Brampton,Ontario, Canada",
+      "jobDescription": [
+        "Designed and implemented backend services for Word Complex Application, developing a modular architecture with separate game routes and integrating backend data workflows to support gamification features.",
+        "Developed Python-based RESTful API services to collect, process, and manage open-source Sanskrit and English learning content by integrating web scraping, spaCy, Dharmamitra NLP libraries, and MongoDB data storage.",
+        "Collaborated with an eight-member Agile development team to design, develop, test, debug, and integrate backend services with application components.",
+        "Implemented backend application logic using Node.js and MongoDB to support structured data storage, retrieval and transformation for application workflows.",
+        "Developed the Punch-N-Spell interactive learning game by implementing JavaScript-based game logic, HTML5 Canvas rendering, and user interaction features.",
+        "Maintained technical documentation, project resources, and development records to support team collaboration and project continuity."
+      ],
+      "workYears": [
+        {
+          "from": {
+            "month": "May",
+            "year": "2026"
+          },
+          "to": {
+            "month": "July",
+            "year": "2026"
+          }
+        },
+        {
+          "from": {
+            "month": "May",
+            "year": "2025"
+          },
+          "to": {
+            "month": "July",
+            "year": "2025"
+          }
+        },
+        {
+          "from": {
+            "month": "August",
+            "year": "2024"
+          },
+          "to": {
+            "month": "December",
+            "year": "2024"
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "Full-Time",
+      "title": "Production Co-Ordinator",
+      "organization": "Jeld-Wen Windows & Doors-Toronto Division",
+      "location": "Vaughan,Ontario, Canada",
+      "jobDescription": [
+        "Created daily production plans as per demands, tracking production flow and coordinated with sales and logistics to meet customer demands.",
+        "Communicated complete and accurate batch details with the production team including specifications, quantities, deadlines, and any special instructions on daily basis.",
+        "Implemented schedule adjustments, such as prioritizing specific orders or reallocating resources, to accommodate prepared customers with urgent deadlines or special requirements daily.",
+        "Generated daily and weekly production reports and workflow reports to monitor efficiency and support data-driven scheduling decisions."
+      ],
+      "workYears": [
+        {
+          "from": {
+            "month": "May",
+            "year": "2019"
+          },
+          "to": {
+            "month": "August",
+            "year": "2021"
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "Full-Time",
+      "title": "Team-Lead",
+      "organization": "Jeld-Wen Windows & Doors-Toronto Division",
+      "location": "Vaughan,Ontario, Canada",
+      "jobDescription": [
+        "Collaborated with relevant departments, including quality control, to ascertain the real-time status of production, ensuring all processes align for timely completion of orders daily.",
+        "Inspected completed work for imperfections to verify product consistency. Additionally, quality control tools utilized to ensure precise assessment and documentation of any identified issues daily.",
+        "Conducted audits at regular intervals to uphold cleanliness, organization, and efficiency standards are met in accordance with 5s principles, reducing wastage and injury rate by 20%.",
+        "Documented completed tasks, issues encountered during the shift recorded the production quantity and quality to the respective departments daily."
+      ],
+      "workYears": [
+        {
+          "from": {
+            "month": "December",
+            "year": "2018"
+          },
+          "to": {
+            "month": "May",
+            "year": "2019"
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "Full-Time",
+      "title": "Assit Group Manager",
+      "organization": "Jeld-Wen Windows & Doors-Toronto Division",
+      "location": "Vaughan,Ontario, Canada",
+      "jobDescription": [
+        "Communicated objectives and implementation tactics to team members to meet production goals daily.",
+        "Supervised and coordinated work activities of new hires assisting group managers with daily tasks on a regular basis.",
+        "Developed, regularly updated, and conducted training on comprehensive SOPs for work operations and machine instructions, ensuring alignment with industry best practices and regulatory requirements.",
+        "Managed workload distribution among employees by implementing a comprehensive cross-training program and periodically rotating employees to different areas within the plant."
+      ],
+      "workYears": [
+        {
+          "from": {
+            "month": "November",
+            "year": "2014"
+          },
+          "to": {
+            "month": "December",
+            "year": "2018"
+          }
+        }
+      ]
+    }
+  ]
 }
