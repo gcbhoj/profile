@@ -10,6 +10,7 @@ import Footer from "./components/footer";
 import DefaultBackground from "./backgrounds/defaultBackground";
 import GamePage from "./pages/gamePage";
 import Education from "./pages/education";
+import WorkExperience from "./pages/workExperience";
 
 const App = () => {
   /**
@@ -27,7 +28,7 @@ const App = () => {
         className="d-flex flex-column"
         style={{
           height: "100vh",
-          overflow: "hidden",
+          // overflow: "hidden",
         }}
       >
         <Navbar />
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/games" element={<Games />} />
           <Route path="/games/:gameId" element={<GamePage />} />
           <Route path="/education" element={<Education />} />
+          <Route path="/experience" element={<WorkExperience />} />
         </Routes>
 
         <Footer />

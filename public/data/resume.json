@@ -142,7 +142,7 @@
         "Designed and implemented backend services for Word Complex Application, developing a modular architecture with separate game routes and integrating backend data workflows to support gamification features.",
         "Developed Python-based RESTful API services to collect, process, and manage open-source Sanskrit and English learning content by integrating web scraping, spaCy, Dharmamitra NLP libraries, and MongoDB data storage.",
         "Collaborated with an eight-member Agile development team to design, develop, test, debug, and integrate backend services with application components.",
-        "Implemented backend application logic using Node.js and Firebase to support structured data storage, retrieval and transformation for application workflows.",
+        "Implemented backend application logic using Node.js and MongoDB to support structured data storage, retrieval and transformation for application workflows.",
         "Developed the Punch-N-Spell interactive learning game by implementing JavaScript-based game logic, HTML5 Canvas rendering, and user interaction features.",
         "Maintained technical documentation, project resources, and development records to support team collaboration and project continuity."
       ],
