@@ -1,4 +1,4 @@
-import TicTacToe from "../games/TicTacToe";
+import TicTacToe from "../games/ticTacToe";
 export const GameList = [
   {
     id: "tic-tac-toe",
