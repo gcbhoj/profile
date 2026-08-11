@@ -26,10 +26,8 @@ const Footer = () => {
 
   return (
     <footer
-      className="fixed-bottom shadow-sm"
-      style={{
-        height: "100px",
-      }}
+      className="shadow-sm "
+
     >
       <div className="container-fluid h-100 d-flex flex-column justify-content-center">
         {/* Social Profiles */}

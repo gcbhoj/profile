@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "gameName": "Tic-Tac-Toe",
+    "image": "/tic-tac-toe.png",
+    "gameURl": "https://gcbhoj.github.io/TicTacToe/"
+  },
+  {
+    "id": 2,
+    "gameName": "Snake & Ladder",
+    "image": "/snakes-and-ladders.png",
+    "gameURl": "https://gcbhoj.github.io/Snake-n-Ladder/"
+  }
+]

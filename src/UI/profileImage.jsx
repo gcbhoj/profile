@@ -2,7 +2,7 @@ const ProfileImage = () => {
   return (
     <div className="profile-image">
       <img
-        src="/profile.jpg"
+        src="/profile_image_1.jpeg"
         alt="Profile"
         className="rounded-circle"
         style={{

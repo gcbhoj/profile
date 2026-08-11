@@ -9,6 +9,7 @@ import Footer from "./components/footer";
 import DefaultBackground from "./backgrounds/defaultBackground";
 import Education from "./pages/education";
 import WorkExperience from "./pages/workExperience";
+import Demos from "./pages/demos";
 
 const App = () => {
   /**
@@ -33,6 +34,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/aboutme" element={<AboutMe />} />
+          <Route path="/demos" element={<Demos />} />
           <Route path="/education" element={<Education />} />
           <Route path="/experience" element={<WorkExperience />} />
         </Routes>
