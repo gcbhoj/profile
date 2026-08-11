@@ -11,11 +11,16 @@ export const navigationItems = [
   },
   {
     id: 3,
+    name: "Demos",
+    path: "/demos",
+  },
+  {
+    id: 4,
     name: "Education",
     path: "/education",
   },
   {
-    id: 4,
+    id: 5,
     name: "Experience",
     path: "/experience",
   },

@@ -22,10 +22,13 @@ const WebExperience = () => {
       <div className="row g-4">
         {progWorkExp.map((experience) => (
           <div key={experience.id} className="col-12 col-md-6 col-lg-4">
-                <div className="card shadow h-100 border rounded-5" style={{
-                    background: "none",
-                    color:"white"
-            }}>
+            <div
+              className="card shadow h-100 border rounded-5"
+              style={{
+                background: "none",
+                color: "white",
+              }}
+            >
               <div className="card-body text-center">
                 <h5 className="card-title">{experience.type}</h5>
 

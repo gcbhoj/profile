@@ -28,10 +28,10 @@ const WorkExperience = () => {
       </h3>
 
       <div
-        className="container-fluid"
+        className="container-fluid "
         style={{
           width: "90%",
-          height: "70%",
+          height: "100%",
           margin: "0 auto",
         }}
       >
