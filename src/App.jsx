@@ -6,10 +6,12 @@ import Home from "./pages/home";
 import AboutMe from "./pages/aboutme";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
-import DefaultBackground from "./backgrounds/defaultBackground";
 import Education from "./pages/education";
 import WorkExperience from "./pages/workExperience";
 import Demos from "./pages/demos";
+
+import HomeBackground from "./backgrounds/homeBackground";
+import ProfileAssistant from "./components/profileAssistant";
 
 const App = () => {
   /**
@@ -22,25 +24,18 @@ const App = () => {
   }, [dispatch]);
   return (
     <>
-      <DefaultBackground />
-      <div
-        className="d-flex flex-column"
-        style={{
-          height: "100vh",
-          // overflow: "hidden",
-        }}
-      >
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/aboutme" element={<AboutMe />} />
-          <Route path="/demos" element={<Demos />} />
-          <Route path="/education" element={<Education />} />
-          <Route path="/experience" element={<WorkExperience />} />
-        </Routes>
+      <HomeBackground />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/aboutme" element={<AboutMe />} />
+        <Route path="/demos" element={<Demos />} />
+        <Route path="/education" element={<Education />} />
+        <Route path="/experience" element={<WorkExperience />} />
+      </Routes>
+      <ProfileAssistant />
 
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 };

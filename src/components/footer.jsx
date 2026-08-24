@@ -26,10 +26,10 @@ const Footer = () => {
 
   return (
     <footer
-      className="shadow-sm "
+      className="shadow-sm border border-2 mt-5"
 
     >
-      <div className="container-fluid h-100 d-flex flex-column justify-content-center">
+      <div className="container-fluid d-flex flex-column justify-content-center">
         {/* Social Profiles */}
         <div className="d-flex justify-content-center align-items-center gap-4 mb-2">
           {profiles.map((profile) => {

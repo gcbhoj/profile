@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import ProfileImage from "../UI/profileImage";
 import TechStack from "../components/techStack";
-import HomeBackground from "../backgrounds/homeBackground";
 import WebExperience from "../components/webExperience";
 
 const Home = () => {
@@ -9,7 +8,6 @@ const Home = () => {
 
   return (
     <>
-      <HomeBackground />
 
       <div
         className="container-fluid d-flex flex-column"
