@@ -1,20 +1,30 @@
 const FLASK_BASE_URL = import.meta.env.VITE_FLASK_URL;
 
 export const getProfileAssistantName = async () => {
-  const response = await fetch(`${FLASK_BASE_URL}/profile_assistant/get-name`, {
+  console.log("GET PROFILE ASSISTANT NAME CALLED");
+
+  const url = `${FLASK_BASE_URL}/profile_assistant/get-name`;
+
+  console.log("REQUEST URL:", url);
+
+  const response = await fetch(url, {
     method: "GET",
     headers: {
-      Content_Type: "application/json",
+      "Content-Type": "application/json",
     },
   });
+
+  console.log("RESPONSE STATUS:", response.status);
 
   if (!response.ok) {
     throw new Error("Failed to retrieve profile assistant name");
   }
 
-  console.log("Profile Assistant Name: ", response);
+  const data = await response.json();
 
-  return await response.json;
+  console.log("PROFILE ASSISTANT DATA:", data);
+
+  return data;
 };
 
 export const initializeNewChat = async () => {

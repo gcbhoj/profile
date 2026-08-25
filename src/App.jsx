@@ -26,6 +26,7 @@ const App = () => {
     <>
       <HomeBackground />
       <Navbar />
+      <ProfileAssistant />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/aboutme" element={<AboutMe />} />
@@ -33,7 +34,6 @@ const App = () => {
         <Route path="/education" element={<Education />} />
         <Route path="/experience" element={<WorkExperience />} />
       </Routes>
-      <ProfileAssistant />
 
       <Footer />
     </>
