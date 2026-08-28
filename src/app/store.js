@@ -4,7 +4,7 @@ import resumeReducer from "../features/resumeSlice";
 import layoutReducer from "../features/layoutSlice";
 import locationReducer from "../features/locationSlice";
 import profileAssistantNameReducer from "../features/profileAssistant/profileAssistantName";
-import profileAssistantChatReducer from "../features/profileAssistant/chat";
+import profileAssistantChatReducer from "../features/profileAssistant/profileAssistantChat";
 
 export default configureStore({
   reducer: {
@@ -14,5 +14,6 @@ export default configureStore({
     location: locationReducer,
     profileAssistantName: profileAssistantNameReducer,
     profileAssistantChat: profileAssistantChatReducer,
+    
   },
 });

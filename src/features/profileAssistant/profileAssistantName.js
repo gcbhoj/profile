@@ -7,7 +7,7 @@ export const fetchProfileAssistantName = createAsyncThunk(
   async () => {
     const data = await getProfileAssistantName();
 
-    console.log("THUNK RECEIVED:", data);
+    // console.log("THUNK RECEIVED:", data);
 
     return data;
   },
@@ -33,7 +33,7 @@ const profileAssistantSlice = createSlice({
       .addCase(fetchProfileAssistantName.fulfilled, (state, action) => {
         state.status = "success";
         state.assistantName = action.payload.assistName;
-        console.log(state.assistantName);
+        // console.log(state.assistantName);
       })
 
       // console.log("Assistant Name: ", initialState.assistantName)

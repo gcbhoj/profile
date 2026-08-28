@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchProfileAssistantName } from "../features/profileAssistant/profileAssistantName";
-import { initNewChat, setRequest } from "../features/profileAssistant/chat";
+import { fetchProfileAssistantName } from "../../features/profileAssistant/profileAssistantName";
+import {
+  initNewChat,
+  setRequest,
+  startConversation,
+  fetchChatHistory,
+} from "../../features/profileAssistant/profileAssistantChat";
 
 import { IoIosSend } from "react-icons/io";
+import ChatHistory from "./chatHistory";
 
 const ProfileAssistant = () => {
   const dispatch = useDispatch();
@@ -44,7 +50,7 @@ const ProfileAssistant = () => {
 
   // Fetch profile assistant name when component starts
   useEffect(() => {
-    console.log("DISPATCHING FETCH PROFILE ASSISTANT NAME");
+    // console.log("DISPATCHING FETCH PROFILE ASSISTANT NAME");
 
     dispatch(fetchProfileAssistantName());
   }, [dispatch]);
@@ -57,7 +63,7 @@ const ProfileAssistant = () => {
   // Monitor chat initialization
   useEffect(() => {
     if (status === "success") {
-      console.log("Chat initialized successfully");
+      // console.log("Chat initialized successfully");
     }
 
     if (status === "failure") {
@@ -79,7 +85,7 @@ const ProfileAssistant = () => {
       return;
     }
 
-    console.log("Submitting request:", text);
+    // console.log("Submitting request:", text);
 
     // Update Redux ONLY when Send is clicked
     dispatch(setRequest(text));
@@ -87,18 +93,8 @@ const ProfileAssistant = () => {
     // Clear the input after submitting
     setUserInput("");
 
-    /*
-     * API call will go here later.
-     *
-     * Example:
-     *
-     * dispatch(
-     *   sendChatRequest({
-     *     chatId: currentChatId,
-     *     request: text,
-     *   })
-     * );
-     */
+    dispatch(startConversation());
+    dispatch(fetchChatHistory());
   };
 
   // Send request when pressing Enter
@@ -228,9 +224,7 @@ const ProfileAssistant = () => {
                     data-bs-parent="#chatHistoryAccordion"
                   >
                     <div className="accordion-body">
-                      <p className="text-muted mb-0">
-                        No previous conversations.
-                      </p>
+                      <ChatHistory />
                     </div>
                   </div>
                 </div>

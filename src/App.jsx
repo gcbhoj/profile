@@ -11,7 +11,7 @@ import WorkExperience from "./pages/workExperience";
 import Demos from "./pages/demos";
 
 import HomeBackground from "./backgrounds/homeBackground";
-import ProfileAssistant from "./components/profileAssistant";
+import ProfileAssistant from "./components/profileAssistant/profileAssistant";
 
 const App = () => {
   /**
