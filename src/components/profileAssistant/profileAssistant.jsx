@@ -1,29 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Modal } from "bootstrap";
 
 import { fetchProfileAssistantName } from "../../features/profileAssistant/profileAssistantName";
+
 import {
   initNewChat,
   setRequest,
   startConversation,
   fetchChatHistory,
+  closeChatSession,
+  isFinalResponse,
 } from "../../features/profileAssistant/profileAssistantChat";
 
 import { IoIosSend } from "react-icons/io";
+
 import ChatHistory from "./chatHistory";
 
 const ProfileAssistant = () => {
   const dispatch = useDispatch();
 
-  // Local input state.
-  // This changes while the user is typing.
-  // It does NOT update Redux.
   const [userInput, setUserInput] = useState("");
 
-  // Profile assistant name from Redux
+  // Prevent the automatic close from running multiple times.
+  const hasClosedChat = useRef(false);
+
+  // ------------------------------------
+  // Profile Assistant Name
+  // ------------------------------------
+
   const { assistantName } = useSelector((state) => state.profileAssistantName);
 
-  // Profile assistant chat state from Redux
+  // ------------------------------------
+  // Profile Assistant Chat State
+  // ------------------------------------
+
   const {
     currentRequest,
     currentResponse,
@@ -33,7 +44,10 @@ const ProfileAssistant = () => {
     error,
   } = useSelector((state) => state.profileAssistantChat);
 
-  // Function to normalize a string into individual sentences
+  // ------------------------------------
+  // Normalize Sentences
+  // ------------------------------------
+
   const normalizeSentence = (sentence) => {
     if (!sentence || typeof sentence !== "string") {
       return [];
@@ -45,69 +59,146 @@ const ProfileAssistant = () => {
       .filter((part) => part.length > 0);
   };
 
-  // Normalize the initial message
   const normalizedMessage = normalizeSentence(firstMessage);
 
-  // Fetch profile assistant name when component starts
-  useEffect(() => {
-    // console.log("DISPATCHING FETCH PROFILE ASSISTANT NAME");
+  // ------------------------------------
+  // Fetch Assistant Name
+  // ------------------------------------
 
+  useEffect(() => {
     dispatch(fetchProfileAssistantName());
   }, [dispatch]);
 
-  // Initialize a new chat with the profile assistant
+  // ------------------------------------
+  // Open New Chat
+  // ------------------------------------
+
   const handleOpenChat = () => {
+    hasClosedChat.current = false;
+
     dispatch(initNewChat());
   };
 
-  // Monitor chat initialization
-  useEffect(() => {
-    if (status === "success") {
-      // console.log("Chat initialized successfully");
-    }
+  // ------------------------------------
+  // Monitor Errors
+  // ------------------------------------
 
+  useEffect(() => {
     if (status === "failure") {
-      console.error("Chat initialization failed:", error);
+      console.error("Profile Assistant error:", error);
     }
   }, [status, error]);
 
-  // Update ONLY local input while typing
+  // ------------------------------------
+  // Input Change
+  // ------------------------------------
+
   const handleInputChange = (event) => {
     setUserInput(event.target.value);
   };
 
-  // Submit the request
-  const sendRequest = () => {
+  // ------------------------------------
+  // Send Request
+  // ------------------------------------
+
+  const sendRequest = async () => {
     const text = userInput.trim();
 
-    // Do nothing if the input is empty
     if (!text) {
       return;
     }
 
-    // console.log("Submitting request:", text);
-
-    // Update Redux ONLY when Send is clicked
+    // Update Redux request.
     dispatch(setRequest(text));
 
-    // Clear the input after submitting
+    // Clear input.
     setUserInput("");
 
-    dispatch(startConversation());
-    dispatch(fetchChatHistory());
+    try {
+      // Send the request and wait for the response.
+      await dispatch(startConversation()).unwrap();
+
+      // Retrieve updated chat history.
+      await dispatch(fetchChatHistory()).unwrap();
+    } catch (error) {
+      console.error("Failed to process chat request:", error);
+    }
   };
 
-  // Send request when pressing Enter
+  // ------------------------------------
+  // Enter Key
+  // ------------------------------------
+
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
+
       sendRequest();
     }
   };
 
+  // ------------------------------------
+  // Manually Close Chat
+  // ------------------------------------
+
+  const handleCloseChat = async () => {
+    try {
+      await dispatch(closeChatSession()).unwrap();
+
+      console.log("Chat session closed successfully.");
+    } catch (error) {
+      console.error("Failed to close chat session:", error);
+    }
+  };
+
+  // ------------------------------------
+  // Automatically Close Final Chat
+  // ------------------------------------
+
+  useEffect(() => {
+    if (
+      !currentResponse ||
+      !isFinalResponse(currentResponse) ||
+      hasClosedChat.current
+    ) {
+      return;
+    }
+
+    hasClosedChat.current = true;
+
+    // console.log("Final response received. Closing modal in 5 seconds...");
+
+    const timer = setTimeout(async () => {
+      try {
+        await dispatch(closeChatSession()).unwrap();
+
+        const modalElement = document.getElementById("exampleModal");
+
+        if (modalElement) {
+          // Remove focus from any focused element inside the modal.
+          const activeElement = document.activeElement;
+
+          if (activeElement && modalElement.contains(activeElement)) {
+            activeElement.blur();
+          }
+
+          const modal =
+            Modal.getInstance(modalElement) || new Modal(modalElement);
+
+          modal.hide();
+        }
+      } catch (error) {
+        console.error("Failed to close chat session:", error);
+      }
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [currentResponse, dispatch]);
+
   return (
     <>
       {/* Profile Assistant */}
+
       <div
         className="container-fluid border border-2"
         style={{
@@ -151,6 +242,7 @@ const ProfileAssistant = () => {
       </div>
 
       {/* Modal */}
+
       <div
         className="modal fade"
         id="exampleModal"
@@ -161,6 +253,7 @@ const ProfileAssistant = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             {/* Modal Header */}
+
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
                 {assistantName}
@@ -171,12 +264,15 @@ const ProfileAssistant = () => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onClick={handleCloseChat}
               />
             </div>
 
             {/* Modal Body */}
+
             <div className="modal-body">
               {/* Initial Message */}
+
               <div className="mb-3">
                 <strong>{assistantName}:</strong>
 
@@ -191,6 +287,7 @@ const ProfileAssistant = () => {
                 )}
 
                 {/* Initial Audio */}
+
                 {firstAudio && (
                   <audio controls className="mt-2 w-100">
                     <source src={firstAudio} type="audio/mpeg" />
@@ -202,6 +299,7 @@ const ProfileAssistant = () => {
               <hr />
 
               {/* Chat History */}
+
               <div className="accordion mb-3" id="chatHistoryAccordion">
                 <div className="accordion-item border-0">
                   <h2 className="accordion-header" id="chatHistoryHeading">
@@ -230,11 +328,13 @@ const ProfileAssistant = () => {
                 </div>
               </div>
 
-              {/* Current Request and Response */}
+              {/* Current Chat */}
+
               <div className="p-3">
                 <h5 className="mb-3">Current Chat</h5>
 
                 {/* Current Request */}
+
                 {currentRequest && (
                   <div className="mb-3 d-flex justify-content-end">
                     <div
@@ -253,6 +353,7 @@ const ProfileAssistant = () => {
                 )}
 
                 {/* Current Response */}
+
                 <div>
                   <strong>{assistantName}:</strong>
 
@@ -268,6 +369,7 @@ const ProfileAssistant = () => {
             </div>
 
             {/* Chat Input */}
+
             <div className="modal-footer">
               <div className="d-flex align-items-center w-100 gap-2">
                 <div className="form-floating flex-grow-1">

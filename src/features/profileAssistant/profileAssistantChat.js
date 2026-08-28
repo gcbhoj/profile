@@ -4,6 +4,7 @@ import {
   initializeNewChat,
   postNewQuery,
   getChatHistory,
+  updateChatSession,
 } from "../../../APIservices/flaskservices/profileAssistant";
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
 // ------------------------------------
 // Initialize New Chat
 // ------------------------------------
+
 export const initNewChat = createAsyncThunk(
   "profileAssistant/newChat",
   async () => {
@@ -33,6 +35,7 @@ export const initNewChat = createAsyncThunk(
 // ------------------------------------
 // Post New Query
 // ------------------------------------
+
 export const startConversation = createAsyncThunk(
   "profileAssistant/postQuery",
   async (_, thunkAPI) => {
@@ -46,8 +49,11 @@ export const startConversation = createAsyncThunk(
       return;
     }
 
-    const data = await postNewQuery(currentSessionId, currentRequest);
+    if (!currentSessionId) {
+      throw new Error("chat session id not available")
+    }
 
+    const data = await postNewQuery(currentSessionId, currentRequest);
 
     return data;
   },
@@ -56,6 +62,7 @@ export const startConversation = createAsyncThunk(
 // ------------------------------------
 // Retrieve Chat History
 // ------------------------------------
+
 export const fetchChatHistory = createAsyncThunk(
   "profileAssistant/chatHistory",
   async (_, thunkAPI) => {
@@ -69,7 +76,41 @@ export const fetchChatHistory = createAsyncThunk(
 
     const response = await getChatHistory(sessionId);
 
-    console.log("Chat History data:", response);
+    // console.log("Chat History data:", response);
+
+    return response;
+  },
+);
+
+// ------------------------------------
+// Close Chat Session
+// ------------------------------------
+
+export const isFinalResponse = (response) => {
+  if (typeof response !== "string") {
+    return false;
+  }
+
+  const normalizedResponse = response.toLowerCase();
+
+  return (
+    normalizedResponse.includes("goodbye") ||
+    normalizedResponse.includes("good bye")
+  );
+};
+
+export const closeChatSession = createAsyncThunk(
+  "profileAssistant/closeSession",
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+
+    const sessionId = state.profileAssistantChat.currentChatId;
+
+    if (!sessionId) {
+      throw new Error("Chat session ID is not available.");
+    }
+
+    const response = await updateChatSession(sessionId);
 
     return response;
   },
@@ -78,6 +119,7 @@ export const fetchChatHistory = createAsyncThunk(
 // ------------------------------------
 // Slice
 // ------------------------------------
+
 const profileAssistantChatSlice = createSlice({
   name: "profileAssistantChat",
 
@@ -106,8 +148,6 @@ const profileAssistantChatSlice = createSlice({
       })
 
       .addCase(initNewChat.fulfilled, (state, action) => {
-        // console.log("FULFILLED PAYLOAD:", action.payload);
-
         state.status = "success";
 
         state.currentChatId = action.payload.sessionId;
@@ -132,7 +172,7 @@ const profileAssistantChatSlice = createSlice({
       })
 
       .addCase(startConversation.fulfilled, (state, action) => {
-        console.log("POST QUERY FULFILLED PAYLOAD:", action.payload);
+        // console.log("POST QUERY FULFILLED PAYLOAD:", action.payload);
 
         state.status = "success";
 
@@ -156,15 +196,42 @@ const profileAssistantChatSlice = createSlice({
       })
 
       .addCase(fetchChatHistory.fulfilled, (state, action) => {
-        console.log("CHAT HISTORY FULFILLED PAYLOAD:", action.payload);
+        // console.log("CHAT HISTORY FULFILLED PAYLOAD:", action.payload);
 
         state.status = "success";
 
         state.chatHistory = action.payload.data.history;
-        console.log("PAY LOAD:", action.payload);
       })
 
       .addCase(fetchChatHistory.rejected, (state, action) => {
+        state.status = "failure";
+        state.error = action.error.message;
+      })
+
+      // ------------------------------------
+      // Close Current Chat Session
+      // ------------------------------------
+
+      .addCase(closeChatSession.pending, (state) => {
+        state.status = "waiting for response";
+        state.error = null;
+      })
+
+      .addCase(closeChatSession.fulfilled, (state) => {
+        // console.log("CLOSE CHAT FULFILLED PAYLOAD:", action.payload);
+
+        state.status = "success";
+
+        state.currentRequest = "";
+        state.currentResponse = "";
+        state.currentAudio = null;
+        state.currentChatId = null;
+        state.firstMessage = "";
+        state.firstAudio = null;
+        state.chatHistory = [];
+      })
+
+      .addCase(closeChatSession.rejected, (state, action) => {
         state.status = "failure";
         state.error = action.error.message;
       });

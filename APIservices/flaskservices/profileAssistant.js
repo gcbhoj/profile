@@ -85,7 +85,23 @@ export const getChatHistory = async (sessionId) => {
 
   const data = await response.json();
 
-  console.log("GET CHAT HISTORY RESPONSE:", data);
+  // console.log("GET CHAT HISTORY RESPONSE:", data);
 
   return data;
+};
+
+export const updateChatSession = async (sessionId) => {
+  const response = await fetch(
+    `${FLASK_BASE_URL}/profile_assistant/update-status?sessionId=${encodeURIComponent(sessionId)}`,
+    {
+      method: "POST",
+    },
+  );
+  // console.log(sessionId, "from API SERVICES");
+  if (!response.ok) {
+    throw new Error("failed to update chat history");
+  }
+  const result = await response.json();
+
+  return result;
 };
