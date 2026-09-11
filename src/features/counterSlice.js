@@ -18,7 +18,7 @@ export const updateDatabaseCounter = createAsyncThunk(
       // If isNewUser is true, the backend increments the user counter.
       // If false, the backend knows it's an existing user opening another tab.
       // return await counterService.syncInstanceCount({ isNewUser });
-      console.log(isNewUser);
+      // console.log(isNewUser);
     } catch (error) {
       return rejectWithValue(error.message);
     }

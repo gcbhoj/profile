@@ -1,13 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { setGeoLocation } from "../../APIservices/flaskservices/profileAssistant";
 
 const initialState = {
   latitude: null,
   longitude: null,
-  city: null,
+  status: "idle",
+  error: null,
 };
 
+export const setUserLocation = createAsyncThunk(
+  "clientLocation/setLocation",
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+
+    const userLatitude = state.clientLocation.latitude;
+    const userLongitude = state.clientLocation.longitude;
+
+    const response = await setGeoLocation(userLatitude, userLongitude);
+
+    return response;
+  },
+);
+
 export const locationSlice = createSlice({
-  name: "location",
+  name: "clientLocation",
 
   initialState,
 
@@ -15,13 +31,11 @@ export const locationSlice = createSlice({
     setLocation: (state, action) => {
       state.latitude = action.payload.latitude;
       state.longitude = action.payload.longitude;
-      state.city = action.payload.city;
     },
 
     clearLocation: (state) => {
       state.latitude = null;
       state.longitude = null;
-      state.city = null;
     },
   },
 });
