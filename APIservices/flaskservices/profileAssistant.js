@@ -105,3 +105,23 @@ export const updateChatSession = async (sessionId) => {
 
   return result;
 };
+
+export const setGeoLocation = async (latitude, longitude) => {
+  const response = await fetch(`${FLASK_BASE_URL}/profile_assistant/location`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      latitude: latitude,
+      longitude: longitude,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("failed to set geo location")
+  }
+  const result = await response.json()
+
+  return result
+}

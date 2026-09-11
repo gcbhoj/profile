@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "bootstrap";
 
 import { fetchProfileAssistantName } from "../../features/profileAssistant/profileAssistantName";
+import { getLocationPermissions } from "../../config/userPermissions";
+import { setLocation } from "../../features/locationSlice";
 
 import {
   initNewChat,
@@ -73,11 +75,26 @@ const ProfileAssistant = () => {
   // Open New Chat
   // ------------------------------------
 
-  const handleOpenChat = () => {
-    hasClosedChat.current = false;
+const handleOpenChat = async () => {
+  hasClosedChat.current = false;
 
-    dispatch(initNewChat());
-  };
+  try {
+    const location = await getLocationPermissions();
+
+    console.log("Location Permissions Data:", location);
+
+    dispatch(
+      setLocation({
+        latitude: location.latitude,
+        longitude: location.longitude,
+      }),
+    );
+  } catch (error) {
+    console.error("Failed to get user location:", error);
+  }
+
+  dispatch(initNewChat());
+};
 
   // ------------------------------------
   // Monitor Errors
@@ -141,11 +158,30 @@ const ProfileAssistant = () => {
   // Manually Close Chat
   // ------------------------------------
 
+  const hideModal = () => {
+    const modalElement = document.getElementById("exampleModal");
+
+    if (!modalElement) {
+      return;
+    }
+
+    const activeElement = document.activeElement;
+
+    if (activeElement && modalElement.contains(activeElement)) {
+      activeElement.blur();
+    }
+
+    const modal = Modal.getInstance(modalElement) || new Modal(modalElement);
+
+    modal.hide();
+  };
+
   const handleCloseChat = async () => {
     try {
       await dispatch(closeChatSession()).unwrap();
+      hideModal();
 
-      console.log("Chat session closed successfully.");
+      // console.log("Chat session closed successfully.");
     } catch (error) {
       console.error("Failed to close chat session:", error);
     }
@@ -172,21 +208,7 @@ const ProfileAssistant = () => {
       try {
         await dispatch(closeChatSession()).unwrap();
 
-        const modalElement = document.getElementById("exampleModal");
-
-        if (modalElement) {
-          // Remove focus from any focused element inside the modal.
-          const activeElement = document.activeElement;
-
-          if (activeElement && modalElement.contains(activeElement)) {
-            activeElement.blur();
-          }
-
-          const modal =
-            Modal.getInstance(modalElement) || new Modal(modalElement);
-
-          modal.hide();
-        }
+        hideModal();
       } catch (error) {
         console.error("Failed to close chat session:", error);
       }
@@ -262,7 +284,6 @@ const ProfileAssistant = () => {
               <button
                 type="button"
                 className="btn-close"
-                data-bs-dismiss="modal"
                 aria-label="Close"
                 onClick={handleCloseChat}
               />
